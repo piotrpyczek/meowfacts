@@ -1,0 +1,15 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+}
+
+.meowfacts-container {
+  flex: 1 1 auto;
+  overflow-x: hidden;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+}

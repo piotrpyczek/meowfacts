@@ -1,0 +1,48 @@
+<nav>
+  <div class="nav-wrapper indigo">
+    <ul class="right">
+      <li><a>logout</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div infiniteList
+     [threshold]="50"
+     (bottomThreshold)="onFetchNext()"
+     #meowfactsContainer
+     class="meowfacts-container">
+
+  <div #meowfactsWrapper>
+    <ng-container *ngFor="let item of meowfacts">
+      <div class="row">
+        <div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3">
+          <div class="card">
+            <div class="card-content grey lighten-4">
+              <p>{{item.data}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <div *ngIf="loading"
+       class="row">
+    <div class="col s10 m8 l6 offset-s1 offset-m2 offset-l3 flex-center">
+      <div class="preloader-wrapper small active">
+        <div class="spinner-layer spinner-blue-only">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div>
+          <div class="gap-patch">
+            <div class="circle"></div>
+          </div>
+          <div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
