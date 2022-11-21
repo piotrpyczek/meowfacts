@@ -1,8 +1,6 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { expand, filter, finalize, Subject, take, takeUntil, takeWhile } from 'rxjs';
-import { AuthService } from '../auth';
-import { Meowfact, MeowfactsService } from '../model';
+import { Meowfact, MeowfactsService } from '../../model';
 
 @Component({
   selector: 'app-meowfacts',
@@ -17,10 +15,17 @@ export class MeowfactsComponent implements OnInit, OnDestroy {
   @ViewChild('meowfactsContainer') container!: ElementRef<HTMLElement>;
   @ViewChild('meowfactsWrapper') wrapper!: ElementRef<HTMLElement>;
 
-  constructor(private meowfactsService: MeowfactsService, private authService: AuthService, private router: Router) {
+  constructor(private meowfactsService: MeowfactsService) {
   }
 
   meowfacts: Meowfact[] = [];
+
+  @HostListener('window:resize')
+  onWindowResize() {
+    if (!this.isPageFull()) {
+      this.fetchInitialData();
+    }
+  }
 
   ngOnInit(): void {
     this.fetchInitialData();
@@ -29,7 +34,7 @@ export class MeowfactsComponent implements OnInit, OnDestroy {
   fetchInitialData() {
     this.getUniqueMeowfacts()
       .pipe(
-        takeWhile(() => !this.isPageFull())
+        takeWhile(() => !this.isPageFull()),
       )
       .subscribe(meowfact => {
         this.meowfacts.push(meowfact);
@@ -53,16 +58,6 @@ export class MeowfactsComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroyed$.next();
     this.destroyed$.complete();
-  }
-
-  onLogout() {
-    this.authService.logout()
-      .subscribe(loggedOut => {
-        if (loggedOut) {
-          this.router.navigateByUrl('/login');
-        }
-      })
-      ;
   }
 
   private getUniqueMeowfacts() {

@@ -1,0 +1,11 @@
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+router-outlet + ::ng-deep * {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  flex: 1;
+  height: 10rem;
+}

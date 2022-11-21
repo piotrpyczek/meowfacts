@@ -6,11 +6,11 @@ const routes: Routes = [
   {
     path: '',
     canActivate: [AuthGuard],
-    loadChildren: () => import('./meowfacts/meowfacts.module').then(m => m.MeowfactsModule)
+    loadChildren: () => import('./components/layout/layout.module').then(m => m.LayoutModule)
   },
   {
     path: 'login',
-    loadChildren: () => import('./login/login.module').then(m => m.LoginModule)
+    loadChildren: () => import('./components/login/login.module').then(m => m.LoginModule)
   }
 ];
 

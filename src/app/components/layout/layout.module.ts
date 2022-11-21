@@ -1,26 +1,30 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MeowfactsComponent } from './meowfacts.component';
+import { LayoutComponent } from './layout.component';
 import { RouterModule, Routes } from '@angular/router';
-import { InfiniteListModule } from '../common';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: MeowfactsComponent
+    component: LayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('../meowfacts/meowfacts.module').then(m => m.MeowfactsModule)
+      },
+    ]
   }
 ];
 
 
 @NgModule({
   declarations: [
-    MeowfactsComponent
+    LayoutComponent
   ],
   imports: [
     CommonModule,
-    InfiniteListModule,
     RouterModule.forChild(routes)
   ]
 })
-export class MeowfactsModule { }
+export class LayoutModule { }
