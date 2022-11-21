@@ -1,5 +1,7 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { expand, filter, finalize, Subject, take, takeUntil, takeWhile } from 'rxjs';
+import { AuthService } from '../auth';
 import { Meowfact, MeowfactsService } from '../model';
 
 @Component({
@@ -15,7 +17,7 @@ export class MeowfactsComponent implements OnInit, OnDestroy {
   @ViewChild('meowfactsContainer') container!: ElementRef<HTMLElement>;
   @ViewChild('meowfactsWrapper') wrapper!: ElementRef<HTMLElement>;
 
-  constructor(private meowfactsService: MeowfactsService) {
+  constructor(private meowfactsService: MeowfactsService, private authService: AuthService, private router: Router) {
   }
 
   meowfacts: Meowfact[] = [];
@@ -51,6 +53,16 @@ export class MeowfactsComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroyed$.next();
     this.destroyed$.complete();
+  }
+
+  onLogout() {
+    this.authService.logout()
+      .subscribe(loggedOut => {
+        if (loggedOut) {
+          this.router.navigateByUrl('/login');
+        }
+      })
+      ;
   }
 
   private getUniqueMeowfacts() {

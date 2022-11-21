@@ -3,24 +3,32 @@
     <div class="z-depth-1 grey lighten-4 col s12 m8 l6 offset-m2 offset-l3 form-container">
       <div class='row'>
         <div class='input-field'>
-          <input class='validate'
-                 type='email'
-                 id='email' />
+          <input [(ngModel)]="userCredentials.email"
+                 class='validate'
+                 [class.invalid]="emailValidationMessage"
+                 type='text'
+                 id='email'
+                 (input)="validateEmail()" />
           <label for='email'>Enter your email</label>
+          <span class="helper-text">{{emailValidationMessage}}</span>
         </div>
       </div>
 
       <div class='row'>
         <div class='input-field'>
-          <input class='validate'
+          <input [(ngModel)]="userCredentials.password"
+                 class='validate'
+                 [class.invalid]="passwordValidationMessage"
                  type='password'
-                 id='password' />
+                 id='password'
+                 (input)="validatePassword()" />
           <label for='password'>Enter your password</label>
+          <span class="helper-text">{{passwordValidationMessage}}</span>
         </div>
       </div>
 
       <div class='row'>
-        <button type='submit'
+        <button (click)="onLogin()"
                 class='col s12 btn btn-large waves-effect indigo'>Login</button>
       </div>
     </div>
