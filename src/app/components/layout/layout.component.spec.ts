@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterModule } from '@angular/router';
+import { AuthService, DummyAuthService, UserLocalStorage, UserStorage } from '../../auth';
 
 import { LayoutComponent } from './layout.component';
 
@@ -8,9 +10,14 @@ describe('LayoutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LayoutComponent ]
+      declarations: [LayoutComponent],
+      imports: [RouterModule],
+      providers: [
+        { provide: UserStorage, useClass: UserLocalStorage },
+        { provide: AuthService, useClass: DummyAuthService }
+      ],
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(LayoutComponent);
     component = fixture.componentInstance;

@@ -1,4 +1,6 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { InfiniteListModule } from '../../common';
 
 import { MeowfactsComponent } from './meowfacts.component';
 
@@ -8,9 +10,10 @@ describe('MeowfactsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MeowfactsComponent ]
+      declarations: [MeowfactsComponent],
+      imports: [HttpClientModule, InfiniteListModule]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(MeowfactsComponent);
     component = fixture.componentInstance;
